@@ -71,7 +71,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'org.swing.builders:SwingBuilders'
+        name = 'org.swing.builders:swingbuilders'
         desc = 'Type safe builder API library for javax.swing components'
 
         publicDownloadNumbers = true
