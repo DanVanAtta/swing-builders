@@ -1,0 +1,7 @@
+.idea
+.git
+.gradle
+*.swp
+local.properties
+build/
+out/

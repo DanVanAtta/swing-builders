@@ -1,0 +1,89 @@
+plugins {
+    id "java"
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.1"
+}
+
+group = "org.swing.builders"
+version = "0.0.${System.getenv("TRAVIS_BUILD_NUMBER") ?: "0"}"
+sourceCompatibility = '1.8'
+
+ext {
+    gradleVersion = "4.8"
+}
+
+repositories {
+    jcenter()
+
+    maven {
+        url 'https://dl.bintray.com/dvanatta/maven/'
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = project.gradleVersion
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact javadocJar
+            artifact sourcesJar
+        }
+    }
+}
+
+
+bintray {
+    user = "$System.env.BINTRAY_USER"
+    key = "$System.env.BINTRAY_KEY"
+    dryRun = false //[Default: false] Whether to run this as dry-run, without deploying
+    publish = true
+    publications = [ "maven" ]
+    override = true //[Default: false] Whether to override version artifacts already published
+
+    pkg {
+        repo = 'maven'
+        name = 'org.swing.builders:SwingBuilders'
+        desc = 'Type safe builder API library for javax.swing components'
+
+        publicDownloadNumbers = true
+        licenses = ['GPL-3.0']
+        websiteUrl = 'https://github.com/danvanatta/SwingBuilders'
+        issueTrackerUrl = 'https://github.com/danvanatta/SwingBuilders/issues'
+        vcsUrl = 'https://github.com/danvanatta/SwingBuilders.git'
+
+        version {
+            name = "${project.version}"
+            desc = 'Type safe builder API library for javax.swing components'
+//            gpg {
+//                sign = true //Determines whether to GPG sign the files. The default is false
+//                passphrase = 'passphrase' //Optional. The passphrase for GPG signing'
+//            }
+        }
+    }
+}
+
+javadoc {
+    options {
+        links = ['http://junit.org/javadoc/latest/']
+        use = true
+        windowTitle = 'jEdit Test Framework API'
+    }
+}
