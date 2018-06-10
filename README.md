@@ -1,6 +1,11 @@
 # SwingBuilder
 Simplified and type-safe builder API for javax.swing components
 
+# Importing with Gradle
+
+```
+compile 'org.better.swing.builders:SwingBuilders:0.0.17'
+```
 
 # Building project with IDE (IDEA)
 
