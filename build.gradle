@@ -1,10 +1,11 @@
 plugins {
     id "java"
+    id 'idea'
     id 'maven-publish'
     id "com.jfrog.bintray" version "1.8.1"
 }
 
-group = "org.swing.builders"
+group = "org.better.swing.builders"
 version = "0.0.${System.getenv("TRAVIS_BUILD_NUMBER") ?: "0"}"
 sourceCompatibility = '1.8'
 
@@ -18,6 +19,16 @@ repositories {
     maven {
         url 'https://dl.bintray.com/dvanatta/maven/'
     }
+    maven {
+        url 'https://jitpack.io'
+    }
+
+}
+
+dependencies {
+    testCompile 'com.github.junit-team.junit5-samples:junit5-mockito-extension:e9b64bd'
+    testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

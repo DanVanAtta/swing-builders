@@ -2,6 +2,9 @@
 .git
 .gradle
 *.swp
+*.iml
+*.ipr
+*.iws
 local.properties
 build/
 out/
