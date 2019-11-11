@@ -1,10 +1,11 @@
 # SwingBuilder
 Simplified and type-safe builder API for javax.swing components
 
-# Importing with Gradle
+# Importing with Gradle*
 
+*(not yet live on MavenCentral)
 ```
-compile 'org.better.swing.builders:swingbuilders:0.0.17'
+compile 'com.github.DanVanAtta:swingbuilders:0.0.17'
 ```
 
 # Building project with IDE (IDEA)
