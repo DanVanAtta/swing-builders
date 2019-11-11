@@ -5,8 +5,8 @@ plugins {
     id "com.jfrog.bintray" version "1.8.1"
 }
 
-group = "org.better.swing.builders"
-version = "0.0.${System.getenv("TRAVIS_BUILD_NUMBER") ?: "0"}"
+group = GROUP
+version = VERSION_NAME
 sourceCompatibility = '1.8'
 
 ext {
@@ -15,18 +15,16 @@ ext {
 
 repositories {
     jcenter()
-
-    maven {
-        url 'https://dl.bintray.com/dvanatta/maven/'
-    }
-    maven {
-        url 'https://jitpack.io'
-    }
-
+    mavenCentral()
 }
 
 dependencies {
-    testCompile 'com.github.junit-team.junit5-samples:junit5-mockito-extension:e9b64bd'
+//    testCompile 'com.github.junit-team.junit5-samples:junit5-mockito-extension:e9b64bd'
+    testCompile "org.junit-pioneer:junit-pioneer:0.3.0"
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.5.2"
+    testCompile "org.junit.jupiter:junit-jupiter-params:5.5.2"
+    testCompile "org.mockito:mockito-core:3.1.0"
+    testCompile "org.mockito:mockito-junit-jupiter:3.1.0"
     testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
 }
@@ -50,47 +48,6 @@ artifacts {
     archives sourcesJar
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-            artifact javadocJar
-            artifact sourcesJar
-        }
-    }
-}
-
-
-bintray {
-    user = "$System.env.BINTRAY_USER"
-    key = "$System.env.BINTRAY_KEY"
-    dryRun = false //[Default: false] Whether to run this as dry-run, without deploying
-    publish = true
-    publications = [ "maven" ]
-    override = true //[Default: false] Whether to override version artifacts already published
-
-    pkg {
-        repo = 'maven'
-        name = 'org.swing.builders:swingbuilders'
-        desc = 'Type safe builder API library for javax.swing components'
-
-        publicDownloadNumbers = true
-        licenses = ['GPL-3.0']
-        websiteUrl = 'https://github.com/danvanatta/SwingBuilders'
-        issueTrackerUrl = 'https://github.com/danvanatta/SwingBuilders/issues'
-        vcsUrl = 'https://github.com/danvanatta/SwingBuilders.git'
-
-        version {
-            name = "${project.version}"
-            desc = 'Type safe builder API library for javax.swing components'
-//            gpg {
-//                sign = true //Determines whether to GPG sign the files. The default is false
-//                passphrase = 'passphrase' //Optional. The passphrase for GPG signing'
-//            }
-        }
-    }
-}
-
 javadoc {
     options {
         links = ['http://junit.org/javadoc/latest/']
@@ -98,3 +55,4 @@ javadoc {
         windowTitle = 'jEdit Test Framework API'
     }
 }
+
